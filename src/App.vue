@@ -35,6 +35,8 @@ const radio1 = ref('1')
 
 const input = ref('')
 console.log(import.meta.env.VITE_BASE_NAME);
+ElMessage.warning('greg')
+
 </script>
 
 <style scoped></style >
