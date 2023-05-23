@@ -7,8 +7,8 @@
   </button>
 </template>
 
-<script setup lang="ts">
-import { useCounterStore } from '../stores/counter';
+<script setup lang="ts" >
+import { useCounterStore } from '@/stores/counter';
 import { ref } from 'vue';
 const store = useCounterStore()
 const input = ref('')

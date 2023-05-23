@@ -8,16 +8,22 @@
       "path": "./tsconfig.app.json"
     }
   ],
+  // 编译选项配置
   "compilerOptions": {
-    "module": "esnext",
-    "target": "esnext",
-    "lib": ["esnext", "dom"],
-    "types": ["vite/client", "node"],
-    "esModuleInterop": true,
-    "strict": true,
-    "jsx": "preserve",
-    "sourceMap": true,
+    "module": "esnext",   // 目标代码需要的模块化方案
+    "target": "esnext",   // 转化后的目标代码(ts -> js)
+    "lib": ["esnext", "dom"],  // 可以指定在项目中可以使用哪里库的类型
+    "types": ["vite/client", "node"],  // 指定具体要解析使用的类型
+    "baseUrl": ".",  // 文件在解析时基本的url
+    "strict": true,  // 严格检查是否开启
+    "jsx": "preserve",  // 对jsx进行如何处理
+    "sourceMap": true,  // 是否生成映射文件(ts -> js)
     "typeRoots": ["node_modules/@types"],
-
+    "importHelpers": true,  // 辅助的导入功能
+    "moduleResolution": "node",  // 按照node的方式解析模块
+    "skipLibCheck": true,  // 跳过一些库的类型检测
+    // 这两个 表示es module 和 commonjs 是否混用
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
   }
 }

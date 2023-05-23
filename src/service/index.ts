@@ -5,6 +5,7 @@ const hyRequest = new HyRequest({
   timeout: 5000,
   interceptors: {
     requestInterceptor: (config) => {
+
       console.log("请求成功拦截")
       return config
     },
@@ -20,7 +21,8 @@ const hyRequest = new HyRequest({
       console.log("响应失败拦截")
       return config
     }
-  }
+  },
+
 })
 // console.log(hyRequest);
 
