@@ -1,4 +1,6 @@
 /// <reference types="vite/client" />
+
+
 // 声明文件
 declare module "*.jpg"
 declare module "*.png"
@@ -18,3 +20,7 @@ declare global {
   const ElMessage:typeof import('element-plus')['ElMessage']
   const ElLoading:typeof import('element-plus')['ElLoading']
 }
+
+declare module 'pinia-plugin-persist'
+
+

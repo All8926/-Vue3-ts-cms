@@ -1,6 +1,6 @@
 
 <template>
-  <h2>{{ store.count }}</h2>
+  <h2>home</h2>
   <el-input v-model="input" />
   <button @click="addCount">
     +1
@@ -8,12 +8,12 @@
 </template>
 
 <script setup lang="ts" >
-import { useCounterStore } from '@/stores/counter';
+// import { useCounterStore } from '@/stores/counter';
 import { ref } from 'vue';
-const store = useCounterStore()
+// const store = useCounterStore()
 const input = ref('')
 
 const addCount = () => {
-  store.add()
+  // store.add()
 }
 </script>

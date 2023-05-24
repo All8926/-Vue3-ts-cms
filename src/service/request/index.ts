@@ -26,13 +26,13 @@ class HyRequest {
       this.interceptors?.responseInterceptor,
       this.interceptors?.responseInterceptorCatch
     )
-    console.log(config)
+    // console.log(config)
     // 所有axios实例都有的请求拦截器
     this.instance.interceptors.request.use(
       (config) => {
-        console.log(config)
+        // console.log(config)
 
-        console.log(this.options)
+        // console.log(this.options)
         this.options = config
         this.showLoading = (this.options.showLoading as boolean) ?? DEFALUT_LOADING
         if (this.showLoading) {
@@ -43,7 +43,6 @@ class HyRequest {
           })
         }
 
-        console.log("所有实例请求成功的拦截")
         return config
       },
       (error) => {
@@ -55,8 +54,7 @@ class HyRequest {
     this.instance.interceptors.response.use(
       (res) => {
         this.showLoading = DEFALUT_LOADING
-        this.loading.close()
-        console.log("所有实例响应成功的拦截")
+        this.loading?.close()
         return res
       },
       (error) => {
@@ -66,61 +64,75 @@ class HyRequest {
     )
   }
 
-  HyRequest(config: HyRequestConfig) {
-    // 单独请求的拦截
-    if (config.interceptors?.aloneRequestInterceptor) {
-      config = config.interceptors.aloneRequestInterceptor(config)
-    }
-    this.instance
-      .request(config)
-      .then((res) => {
-        // 单独q响应拦截
-        if (config.interceptors?.responseInterceptor) {
-          res = config.interceptors.responseInterceptor(res)
-        }
-        console.log(res)
-      })
-      .catch((err) => {
-        this.showLoading = DEFALUT_LOADING
+  // HyRequest(config: HyRequestConfig) {
+  //   // 单独请求的拦截
+  //   if (config.interceptors?.aloneRequestInterceptor) {
+  //     config = config.interceptors.aloneRequestInterceptor(config)
+  //   }
+  //   return this.instance
+  //     .request(config)
+  //     .then((res) => {
+  //       // 单独响应拦截
+  //       if (config.interceptors?.responseInterceptor) {
+  //         res = config.interceptors.responseInterceptor(res)
+  //       }
+  //       // console.log(res)
+  //       return res
+  //     })
+  //     .catch((err) => {
+  //       this.showLoading = DEFALUT_LOADING
 
-        return err
-      })
+  //       return err
+  //     })
+  // }
+  HyRequest<T>(config: HyRequestConfig<T>): Promise<T> {
+    return new Promise((resolve, reject) => {
+      // 单独请求的拦截
+      if (config.interceptors?.aloneRequestInterceptor) {
+        config = config.interceptors.aloneRequestInterceptor( config)
+      }
+
+      this.instance
+        .request<any, T>(config)
+        .then((res: any) => {
+          // 单独q响应拦截
+          if (config.interceptors?.responseInterceptor) {
+            res = config.interceptors.responseInterceptor(res)
+          }
+          resolve(res.data)
+          // console.log(res)
+        })
+        .catch((err) => {
+          this.showLoading = DEFALUT_LOADING
+          reject(err)
+          return err
+        })
+    })
   }
-  // HyRequest<T>(config: HyRequestConfig<T>): Promise<T> {
-  //   return new Promise((resolve, reject) => {
-  //     // 单独请求的拦截
-  //     if (config.interceptors?.requestInterceptor) {
-  //       config = config.interceptors.requestInterceptor( config)
-  //     }
+  get<T>(config: HyRequestConfig<T>): Promise<T> {
 
-  //     this.instance
-  //       .request<any, T>(config)
-  //       .then((res) => {
-  //         // 单独q响应拦截
-  //         if (config.interceptors?.responseInterceptor) {
-  //           res = config.interceptors.responseInterceptor(res)
-  //         }
-  //         resolve(res)
-  //         console.log(res)
-  //       })
-  //       .catch((err) => {
-  //         this.showLoading = DEFALUT_LOADING
-  //         reject(err)
-  //         return err
-  //       })
-  //   })
+    return this.HyRequest<T>({ ...config, method: "get" })
+  }
+  post<T>(config: HyRequestConfig<T>): Promise<T> {
+    return this.HyRequest<T>({ ...config, method: "post" })
+  }
+  delete<T>(config: HyRequestConfig<T>): Promise<T> {
+    return this.HyRequest<T>({ ...config, method: "delete" })
+  }
+  patch<T>(config: HyRequestConfig<T>): Promise<T> {
+    return this.HyRequest<T>({ ...config, method: "patch" })
+  }
+  // get(config: HyRequestConfig) {
+  //   return this.HyRequest({ ...config, method: "get" })
   // }
-  // get<T>(config: HyRequestConfig<T>): Promise<T> {
-  //   return this.HyRequest<T>({ ...config, method: "get" })
+  // post<T>(config: HyRequestConfig) {
+  //   return this.HyRequest({ ...config, method: "post" })
   // }
-  // post<T>(config: HyRequestConfig<T>): Promise<T> {
-  //   return this.HyRequest<T>({ ...config, method: "post" })
+  // delete(config: HyRequestConfig) {
+  //   return this.HyRequest({ ...config, method: "delete" })
   // }
-  // delete<T>(config: HyRequestConfig<T>): Promise<T> {
-  //   return this.HyRequest<T>({ ...config, method: "delete" })
-  // }
-  // patch<T>(config: HyRequestConfig<T>): Promise<T> {
-  //   return this.HyRequest<T>({ ...config, method: "patch" })
+  // patch(config: HyRequestConfig) {
+  //   return this.HyRequest({ ...config, method: "patch" })
   // }
 }
 

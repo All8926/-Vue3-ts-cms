@@ -12,8 +12,6 @@
           <el-button v-if="!btnContent.disabled" type="primary" round @click="sendCode">{{ btnContent.title }}</el-button>
           <el-button v-else type="primary" round @click="sendCode" disabled>{{ btnContent.num }}</el-button>
         </el-col>
-
-
       </el-form-item>
 
     </el-form>
@@ -40,7 +38,6 @@ const sendCode = () => {
     btnContent.disabled = true
     const countdownCode = setInterval(() => {
       btnContent.num--
-      console.log(111);
       if (btnContent.num === 0) {
         clearInterval(countdownCode)
         btnContent.disabled = false
@@ -49,10 +46,6 @@ const sendCode = () => {
     }, 1000)
    }
   })
-
-
-  console.log();
-
 }
 </script>
 

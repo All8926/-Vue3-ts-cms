@@ -1,8 +1,8 @@
 <template>
   <div class='login-panei'>
     <p>后台管理系统</p>
-    <el-tabs type="border-card"  class="demo-tabs" stretch>
-      <el-tab-pane>
+    <el-tabs type="border-card"  class="demo-tabs" v-model="currentTab" stretch>
+      <el-tab-pane name="account">
         <template #label>
           <span class="custom-tabs-label">
             <el-icon><i-ep-userFilled /></el-icon>
@@ -12,7 +12,7 @@
 
         <login-account ref="accountRef"></login-account>
       </el-tab-pane>
-      <el-tab-pane>
+      <el-tab-pane name="email">
         <template #label>
           <span class="custom-tabs-label">
             <el-icon><i-ep-Message /></el-icon>
@@ -29,22 +29,28 @@
 </template>
 
 <script setup lang='ts'>
-import { ref, reactive } from 'vue'
+import { ref } from 'vue'
 import LoginAccount from './Login-account.vue';
 import LoginEmail from './Login-email.vue'
 
-const isKeepPassword = ref(false)
+const isKeepPassword = ref(true)
 const accountRef = ref<InstanceType<typeof LoginAccount>>()
-
+const currentTab  = ref('account')
 const handleLoginClick = () => {
-  accountRef.value?.loginAction()
+
+  // 登录方式
+  if(currentTab.value === 'account'){
+    accountRef.value?.loginAction(isKeepPassword.value)
+  }else{
+    ElMessage.warning('暂不支持邮箱登录')
+
+  }
 
 }
 </script>
 
 <style scoped lang="less">
 .login-panei {
-  // background-color: #bfc;
   width: 350px;
   height: 200px;
   margin-bottom: 200px;

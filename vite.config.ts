@@ -11,6 +11,15 @@ import IconsResolver from "unplugin-icons/resolver"
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  server:{
+    proxy:{
+      '/api':{
+        target:'http://codercba.com:5000/',
+        changeOrigin: true,  //是否允许跨域
+        rewrite: (path) => path.replace(/^\/api/, '')  // 重写路径把路径变成空字符
+      }
+    }
+  },
   plugins: [
     vue(),
     AutoImport({

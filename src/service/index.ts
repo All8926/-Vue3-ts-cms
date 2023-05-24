@@ -1,12 +1,15 @@
 import HyRequest from "./request"
+import localCache from '@/utils/localCache'
 
 const hyRequest = new HyRequest({
-  baseURL: "http://httpbin.org/",
+  baseURL: import.meta.env.VITE_BASE_URL,
   timeout: 5000,
   interceptors: {
     requestInterceptor: (config) => {
-
-      console.log("请求成功拦截")
+      const token = localCache.getCache('cms_token')
+      if(token){
+        config.headers.Authorization = `Bearer ${token}`
+      }
       return config
     },
     requestInterceptorCatch: (config) => {
@@ -14,7 +17,6 @@ const hyRequest = new HyRequest({
       return config
     },
     responseInterceptor: (res) => {
-      console.log("响应成功拦截")
       return res
     },
     responseInterceptorCatch: (config) => {
