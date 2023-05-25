@@ -10,7 +10,7 @@
   ],
   // 编译选项配置
   "compilerOptions": {
-    "types": ["vite/client", "node",  "pinia-plugin-persist"],  // 指定具体要解析使用的类型
+    "types": ["vite/client", "node",],  // 指定具体要解析使用的类型
     "module": "esnext",   // 目标代码需要的模块化方案
     "target": "esnext",   // 转化后的目标代码(ts -> js)
     "lib": ["esnext", "dom"],  // 可以指定在项目中可以使用哪里库的类型

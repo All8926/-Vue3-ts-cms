@@ -39,7 +39,6 @@ export const useLoginStore = defineStore("login", {
       const userMenusResult = await requestUserMenusByRoleId(this.userinfo.role.id)
       this.userMneus = userMenusResult.data
       localCache.setCache("cms_userMenus", this.userMneus)
-      console.log(this.userMneus)
       router.push("/home")
     }
   },

@@ -20,6 +20,7 @@ module.exports = {
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
 	 //关闭组件命名规则
      "vue/multi-word-component-names":"off",
-    //  '@typescript-eslint/no-unused-vars':'off'
+     "vue/require-component-is":"off",
+     "@element-plus/icons":"off"
   }
 }
