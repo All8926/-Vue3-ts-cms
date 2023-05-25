@@ -1,3 +1,4 @@
 export interface IHomeState {
-  name:string
+  name:string,
+  count:number
 }
