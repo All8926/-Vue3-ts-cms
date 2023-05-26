@@ -22,9 +22,7 @@ const router = createRouter({
   ]
 })
 
-router.beforeEach((to,from) => {
-  console.log(to);
-
+router.beforeEach((to) => {
   if(to.path !== '/login'){
     const token = localCache.getCache('cms_token')
     if(!token){

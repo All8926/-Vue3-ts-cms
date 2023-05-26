@@ -5,11 +5,16 @@
       <span>Vue3+TS</span>
     </div>
     <el-scrollbar>
-      <el-menu background-color="#032449" text-color="#fff" active-color="#bfc">
+      <el-menu background-color="#032449" text-color="#fff" :collapse="props.isCollapse">
         <template v-for="(item) in userMneus" :key="item.id">
           <template v-if="item.type === 1">
             <el-sub-menu :index="item.id.toString()">
               <template #title>
+                <!-- <i :class="item.icon" ></i> -->
+                <el-icon>
+                  <component :is="item.icon.slice(8)"></component>
+                </el-icon>
+
                 <span>{{ item.name }}</span>
               </template>
 
@@ -21,7 +26,7 @@
             </el-sub-menu>
           </template>
           <template v-else>
-            <el-menu-item  :index="item.id.toString()">
+            <el-menu-item :index="item.id.toString()">
               <span>{{ item.name }}</span>
             </el-menu-item>
           </template>
@@ -36,22 +41,18 @@
 </template>
 
 <script setup lang='ts'>
-import { ref, reactive, computed } from 'vue'
+import { ref, reactive, computed, } from 'vue'
 import { useLoginStore } from '@/stores/login/login'
 
-const icon = ''
-const menusIcons = reactive([])
 const loginStore = useLoginStore()
 const userMneus = computed(() => {
   return loginStore.userMneus
 })
 
 console.log(userMneus);
-
-const grtMenusIcons = () => {
-
-
-}
+const props = defineProps({
+  isCollapse:Boolean
+})
 
 </script>
 
@@ -61,8 +62,8 @@ const grtMenusIcons = () => {
 
 
   .login {
-    height: 60px;
-    line-height: 60px;
+    height: 50px;
+    line-height: 50px;
     text-align: center;
 
     img {
@@ -81,6 +82,11 @@ const grtMenusIcons = () => {
 
   .el-scrollbar {
     height: calc(100vh - 60px);
+
+    .el-menu {
+      // width: 200px;
+      border: none;
+    }
   }
 }
 </style>

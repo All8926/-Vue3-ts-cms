@@ -1,11 +1,13 @@
 
 <template>
     <el-container>
-      <el-aside width="200px">
-        <navMenu></navMenu>
+      <el-aside :width="isCollapse ? '50px' : '200px'">
+        <navMenu :isCollapse="isCollapse"></navMenu>
       </el-aside>
       <el-container>
-        <el-header>Header</el-header>
+        <el-header height="50px">
+          <navHeader @collapse ="collapse"></navHeader>
+        </el-header>
         <el-main>Main</el-main>
       </el-container>
     </el-container>
@@ -14,13 +16,19 @@
 <script setup lang="ts" >
 import { useHomeStore } from '@/stores/home/home';
 import navMenu from '@/components/nav-menu/index'
+import navHeader from '@/components/nav-header/index';
 import { ref } from 'vue';
 const store = useHomeStore()
-const input = ref('')
+const isCollapse = ref(false)
 
 const addCount = () => {
   store.add()
 }
+const collapse = (value:boolean) => {
+isCollapse.value = value
+
+}
+
 </script>
 <style lang="less">
 .el-container{
