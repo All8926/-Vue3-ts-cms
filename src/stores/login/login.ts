@@ -7,6 +7,7 @@ import {
   requestUserMenusByRoleId
 } from "@/api/login/login"
 import localCache from "@/utils/localCache"
+import mapMenuToRoutes from "@/utils/map-menus"
 
 import routers from "@/router/index"
 const router = routers
@@ -39,17 +40,21 @@ export const useLoginStore = defineStore("login", {
       const userMenusResult = await requestUserMenusByRoleId(this.userinfo.role.id)
       this.userMneus = userMenusResult.data
       localCache.setCache("cms_userMenus", this.userMneus)
-      router.push("/home")
+      router.push("/main")
+      const routes = mapMenuToRoutes(this.userMneus)
+      routes.forEach(item => {
+        router.addRoute("main",item)
+      });
+
+
+      console.log(router.getRoutes())
     }
   },
   getters: {},
 
   // 持久化存储
   persist: {
-    key: 'login',
-    paths: ['token','userinfo','userMneus'],
+    key: "login",
+    paths: ["token", "userinfo", "userMneus"]
   }
 })
-
-
-

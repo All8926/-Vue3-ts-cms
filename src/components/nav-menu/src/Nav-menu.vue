@@ -19,7 +19,7 @@
               </template>
 
               <template v-for="sonItem in item.children" :key="sonItem.id">
-                <el-menu-item :index="sonItem.id.toString()">
+                <el-menu-item :index="sonItem.id.toString()" @click="handleMenuItemClick(sonItem)">
                   <span>{{ sonItem.name }}</span>
                 </el-menu-item>
               </template>
@@ -43,7 +43,8 @@
 <script setup lang='ts'>
 import { ref, reactive, computed, } from 'vue'
 import { useLoginStore } from '@/stores/login/login'
-
+import {useRouter} from 'vue-router'
+const router = useRouter()
 const loginStore = useLoginStore()
 const userMneus = computed(() => {
   return loginStore.userMneus
@@ -53,6 +54,11 @@ console.log(userMneus);
 const props = defineProps({
   isCollapse:Boolean
 })
+
+const handleMenuItemClick = (item:any) => {
+  console.log(item);
+  router.push(item.url)
+}
 
 </script>
 
