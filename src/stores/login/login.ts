@@ -23,6 +23,8 @@ export const useLoginStore = defineStore("login", {
   actions: {
     add() {
       // this.count++
+      console.log(222);
+
     },
     async accountLoginAction(userinfo: any) {
       // 登录逻辑
@@ -41,13 +43,15 @@ export const useLoginStore = defineStore("login", {
       this.userMneus = userMenusResult.data
       localCache.setCache("cms_userMenus", this.userMneus)
       router.push("/main")
+      this.addRoutes()
+    },
+    
+    // 动态添加路由
+    addRoutes(){
       const routes = mapMenuToRoutes(this.userMneus)
       routes.forEach(item => {
         router.addRoute("main",item)
       });
-
-
-      console.log(router.getRoutes())
     }
   },
   getters: {},

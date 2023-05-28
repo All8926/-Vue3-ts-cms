@@ -8,8 +8,11 @@
         <el-header height="50px">
           <navHeader @collapse ="collapse"></navHeader>
         </el-header>
-        <el-main>Main
-          <RouterView></RouterView>
+        <el-main>
+          <div class="page">
+            <RouterView></RouterView>
+          </div>
+
         </el-main>
       </el-container>
     </el-container>
@@ -22,15 +25,19 @@ import navMenu from '@/components/nav-menu/index'
 import navHeader from '@/components/nav-header/index';
 import { useLoginStore } from '@/stores/login/login';
 import mapMenuToRoutes from "@/utils/map-menus"
+import {useRouter} from 'vue-router'
+
 
 import { ref } from 'vue';
 const store = useHomeStore()
 const isCollapse = ref(false)
 // console.log(11);
-
+// const router = useRouter()
 // const loginStore = useLoginStore()
     // const routes = mapMenuToRoutes(loginStore.userMneus)
-
+    // routes.forEach(item => {
+    //   router.addRoute("main",item)
+    // });
 const collapse = (value:boolean) => {
 isCollapse.value = value
 
@@ -50,6 +57,9 @@ isCollapse.value = value
   }
   .el-main{
     background-color: #eee;
+    .page{
+      background-color: #fff;
+    }
   }
 }
 

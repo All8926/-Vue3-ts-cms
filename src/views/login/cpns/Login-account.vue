@@ -37,7 +37,6 @@ const loginAction = (isKeepPassword: boolean) => {
         localCache.deleteCache('cms_password')
       }
       loginStore.accountLoginAction({...account})
-      console.log(2111);
 
     }
 

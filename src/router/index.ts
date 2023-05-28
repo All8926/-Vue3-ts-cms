@@ -48,31 +48,10 @@ const router = createRouter({
 router.beforeEach((to,from) => {
   if(to.path !== '/login'){
     const token = localCache.getCache('cms_token')
-
-    // console.log(menus);
-
     if(!token){
       return '/login'
     }
-    // if(to.path === '/home'){
-
-    //   const routes = mapMenuToRoutes(menus)
-    //   routes.forEach(item => {
-    //     router.addRoute("main",item)
-
-    //   });
-    // }
   }
-   // console.log(to,from);
-  //  if(!from.name){
-  //   console.log(to,from);
-  //   const menus = localCache.getCache('cms_userMenus')
-  //   const routes = mapMenuToRoutes(menus)
-  //   routes.forEach(item => {
-  //     router.addRoute("main",item)
-  //   });
-  //   return to.path
-  // }
 })
 
 export default router
