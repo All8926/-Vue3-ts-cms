@@ -23,13 +23,13 @@ import { useHomeStore } from '@/stores/home/home';
 
 import navMenu from '@/components/nav-menu/index'
 import navHeader from '@/components/nav-header/index';
-import { useLoginStore } from '@/stores/login/login';
-import mapMenuToRoutes from "@/utils/map-menus"
-import {useRouter} from 'vue-router'
+// import { useLoginStore } from '@/stores/login/login';
+// import mapMenuToRoutes from "@/utils/map-menus"
+// import {useRouter} from 'vue-router'
 
 
 import { ref } from 'vue';
-const store = useHomeStore()
+// const store = useHomeStore()
 const isCollapse = ref(false)
 // console.log(11);
 // const router = useRouter()

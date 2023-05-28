@@ -1,5 +1,4 @@
 <template>
-
   <div class='nav-header'>
 
     <el-icon size="30" @click="CollapseClick">
@@ -7,40 +6,54 @@
       <Fold v-else></Fold>
     </el-icon>
     <div class="breadcrumh">
-      面包屑
+      <breadcrumb :breadcrumbs="breadcrumbs"></breadcrumb>
     </div>
     <user-info></user-info>
   </div>
-
 </template>
 
 <script setup lang='ts'>
-// import { emit } from 'process';
-import {ref, reactive} from 'vue'
-import {useLoginStore} from '@/stores/login/login'
+import { ref, reactive, computed } from 'vue'
+
 import UserInfo from './User-info.vue';
+import breadcrumb from '@/base-ui/breadcrumb';
+
+import { useRoute } from 'vue-router'
+import { useLoginStore } from '@/stores/login/login'
+import { pathMapBreadcrumbs } from '@/utils/map-menus'
+
+
+const route = useRoute()
 const isFold = ref(false)
-// import {useLoginStore} from '@/stores/logn/login'
 const loginStore = useLoginStore()
+
 const emit = defineEmits(['collapse'])
 const CollapseClick = () => {
   isFold.value = !isFold.value
- return emit('collapse', isFold.value)
+  return emit('collapse', isFold.value)
 }
+
+
+const breadcrumbs = computed(() => {
+
+  const routePath = route.path
+  return pathMapBreadcrumbs(loginStore.userMneus, routePath)
+})
+console.log(breadcrumbs);
+
+
 </script>
 
 <style scoped lang="less">
-.nav-header{
+.nav-header {
   display: flex;
-  height:100%;
+  height: 100%;
   // line-height: 50px;
   align-items: center;
-.breadcrumh{
-  flex: 1;
-}
-  .el-icon{
-    // vertical-align:middle  ;
-    // margin-bottom: 5px;
+
+  .breadcrumh {
+    flex: 1;
+    margin-left: 10px;
   }
 }
 </style>

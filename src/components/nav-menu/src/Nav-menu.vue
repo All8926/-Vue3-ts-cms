@@ -5,7 +5,7 @@
       <span>Vue3+TS</span>
     </div>
     <el-scrollbar>
-      <el-menu background-color="#032449" text-color="#fff" :collapse="props.isCollapse">
+      <el-menu background-color="#032449" text-color="#fff" :collapse="props.isCollapse" :default-active="defaultValue">
         <template v-for="(item) in userMneus" :key="item.id">
           <template v-if="item.type === 1">
             <el-sub-menu :index="item.id.toString()">
@@ -43,8 +43,10 @@
 <script setup lang='ts'>
 import { ref, reactive, computed, } from 'vue'
 import { useLoginStore } from '@/stores/login/login'
-import {useRouter} from 'vue-router'
+import {useRouter,useRoute} from 'vue-router'
+import {pathMapToMenu} from '@/utils/map-menus'
 const router = useRouter()
+const route = useRoute()
 const loginStore = useLoginStore()
 const userMneus = computed(() => {
   return loginStore.userMneus
@@ -56,9 +58,11 @@ const props = defineProps({
 })
 
 const handleMenuItemClick = (item:any) => {
-  console.log(item);
   router.push(item.url)
 }
+const routePath = route.path
+const menu = pathMapToMenu(userMneus.value, routePath)
+const defaultValue =ref( menu.id.toString())
 
 </script>
 

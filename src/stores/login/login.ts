@@ -7,7 +7,7 @@ import {
   requestUserMenusByRoleId
 } from "@/api/login/login"
 import localCache from "@/utils/localCache"
-import mapMenuToRoutes from "@/utils/map-menus"
+import {mapMenuToRoutes} from "@/utils/map-menus"
 
 import routers from "@/router/index"
 const router = routers
@@ -45,7 +45,7 @@ export const useLoginStore = defineStore("login", {
       router.push("/main")
       this.addRoutes()
     },
-    
+
     // 动态添加路由
     addRoutes(){
       const routes = mapMenuToRoutes(this.userMneus)

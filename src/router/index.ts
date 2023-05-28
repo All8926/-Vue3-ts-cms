@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory, createWebHashHistory } from 'vue-router'
 import localCache from '@/utils/localCache'
-import mapMenuToRoutes from "@/utils/map-menus"
-
+import {firstMenu} from '@/utils/map-menus'
 
 // console.log(routes)
 
@@ -38,12 +37,6 @@ const router = createRouter({
   ]
 })
 
-// router.addRoute("main", {
-//   path: "main/system/menu",
-//   name: "menu",
-//   component: () => import("@/views/home/system/menu/menu.vue"),
-//   children: []
-// })
 
 router.beforeEach((to,from) => {
   if(to.path !== '/login'){
@@ -51,6 +44,10 @@ router.beforeEach((to,from) => {
     if(!token){
       return '/login'
     }
+  }
+
+  if(to.path === '/main'){
+    return firstMenu.url
   }
 })
 
