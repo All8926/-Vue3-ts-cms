@@ -1,19 +1,19 @@
 <template>
-
   <div class='user'>
-     <BaseForm  v-bind="searchFormConfig"></BaseForm>
+    <PageSearch :searchFormConfig="searchFormConfig"></PageSearch>
   </div>
-
 </template>
 
 <script setup lang='ts'>
-import {ref, reactive} from 'vue'
-import BaseForm,{type IForm} from '@/base-ui/form/index'
-import {searchFormConfig} from './config/search.config'
+import { ref, reactive } from 'vue'
+
+import { searchFormConfig } from './config/search.config'
+
+import PageSearch from '@/components/page-search/src/Page-search.vue';
+
 
 
 </script>
 
 <style scoped>
-
 </style>

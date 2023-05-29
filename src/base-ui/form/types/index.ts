@@ -1,6 +1,7 @@
 type IformType = 'input' | 'password' | 'select' | 'datepicker'
 
 export interface IFormItem {
+  field:string,
   type:IformType,
   label:string,
   rules?:any[],
@@ -10,6 +11,7 @@ export interface IFormItem {
 }
 
 export interface IForm {
+
   formItem:IFormItem[],
   labelWidth?:string,
   formItemStyle?:any,

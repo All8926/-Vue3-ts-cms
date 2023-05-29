@@ -51,6 +51,7 @@ declare module '@vue/runtime-core' {
     IEpUserFilled: typeof import('~icons/ep/user-filled')['default']
     NavHeader: typeof import('./src/components/nav-header/src/Nav-header.vue')['default']
     NavMenu: typeof import('./src/components/nav-menu/src/Nav-menu.vue')['default']
+    PageSearch: typeof import('./src/components/page-search/src/Page-search.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     UserInfo: typeof import('./src/components/nav-header/src/User-info.vue')['default']

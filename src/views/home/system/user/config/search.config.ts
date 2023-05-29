@@ -1,37 +1,41 @@
-import {type IForm} from '@/base-ui/form/index'
-export const searchFormConfig:IForm = {
-  formItem:[
+import { type IForm } from "@/base-ui/form/index"
+export const searchFormConfig: IForm = {
+  formItem: [
     {
-      type:'input',
-      label:'姓名'
+      field:'name',
+      type: "input",
+      label: "姓名"
     },
     {
-      type:'input',
-      label:'电话'
+      field:'password',
+      type: "password",
+      label: "密码"
     },
     {
-      type:'select',
-      label:'电话',
-      selectOptions:[
-      {
-        title:'跑步',
-        value:'aaa'
-      },
-      {
-        title:'打球',
-        value:'bbb'
-      },
+      field:'sport',
+      type: "select",
+      label: "运动",
+      selectOptions: [
+        {
+          title: "跑步",
+          value: "aaa"
+        },
+        {
+          title: "打球",
+          value: "bbb"
+        }
       ]
     },
     {
-      type:'datepicker',
-      label:'选择时间',
-      options:{
-        type:'daterange',
-        startPlaceholder:'开始',
-        endPlaceholder:'结束'
+      field:'createTime',
+      type: "datepicker",
+      label: "选择时间",
+      options: {
+        type: "daterange",
+        startPlaceholder: "开始",
+        endPlaceholder: "结束"
       }
     }
   ],
-  labelWidth:'80px'
-  }
+  labelWidth: "70px"
+}
