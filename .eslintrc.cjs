@@ -21,6 +21,7 @@ module.exports = {
 	 //关闭组件命名规则
      "vue/multi-word-component-names":"off",
      "vue/require-component-is":"off",
-     "@element-plus/icons":"off"
+     "@element-plus/icons":"off",
+
   }
 }

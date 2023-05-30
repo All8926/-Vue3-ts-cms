@@ -21,11 +21,7 @@ export const useLoginStore = defineStore("login", {
     }
   },
   actions: {
-    add() {
-      // this.count++
-      console.log(222);
 
-    },
     async accountLoginAction(userinfo: any) {
       // 登录逻辑
       const loginResult = await requestAccountLogin(userinfo)

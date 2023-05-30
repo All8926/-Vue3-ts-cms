@@ -4,7 +4,7 @@ import { createApp } from "vue"
 import App from "./App.vue"
 import store from '@/stores/index'
 import router from "./router"
-import { useAddRoutes} from '@/utils/useAddRoutes'
+import { useAddRoutes} from '@/utils/use-addRoutes'
 const app = createApp(App)
 
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'

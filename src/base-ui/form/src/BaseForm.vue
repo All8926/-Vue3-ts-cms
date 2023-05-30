@@ -73,8 +73,10 @@ const props = defineProps({
 
 const formData = ref({...props.modelValue})
 const emit = defineEmits(['update:modelValue'])
+watch(()  => props.modelValue,(newValue) => {
+  formData.value = {...newValue}
+})
 watch(formData,(newValue) => {
-  // console.log(newValue);
   emit('update:modelValue',newValue)
 
 },{

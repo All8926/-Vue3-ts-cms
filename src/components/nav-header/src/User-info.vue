@@ -20,7 +20,6 @@
 import { ref, reactive } from 'vue'
 import { useLoginStore } from '@/stores/login/login'
 const loginStore = useLoginStore()
-console.log(loginStore);
 
 </script>
 

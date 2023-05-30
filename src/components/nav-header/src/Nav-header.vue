@@ -39,7 +39,6 @@ const breadcrumbs = computed(() => {
   const routePath = route.path
   return pathMapBreadcrumbs(loginStore.userMneus, routePath)
 })
-console.log(breadcrumbs);
 
 
 </script>

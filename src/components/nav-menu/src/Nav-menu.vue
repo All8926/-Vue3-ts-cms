@@ -52,7 +52,6 @@ const userMneus = computed(() => {
   return loginStore.userMneus
 })
 
-console.log(userMneus);
 const props = defineProps({
   isCollapse:Boolean
 })

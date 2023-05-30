@@ -10,7 +10,7 @@
       </template>
       <template #footer>
         <div class="searchBtn">
-          <el-button>
+          <el-button @click="resetForm">
             <el-icon>
               <Refresh />
             </el-icon>重置
@@ -37,12 +37,20 @@ const props = defineProps({
   }
 })
 
-const formData = ref({
-  name: '',
-  password: '',
-  sport: '',
-  createTime: ''
-})
+// eslint-disable-next-line vue/no-setup-props-destructure
+const formItems = props.searchFormConfig.formItem
+
+const formOriginData:any = {}
+for (const item of formItems) {
+  formOriginData[item.field] = ''
+}
+
+const formData = ref(formOriginData)
+
+// 重置
+const resetForm = () => {
+  formData.value = formOriginData
+}
 </script>
 
 <style scoped lang="less">
