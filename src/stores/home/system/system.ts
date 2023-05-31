@@ -19,9 +19,8 @@ export const useSystemStore = defineStore("system", {
       const pageUrl = pageUrls[pageName]
       const pageResult = await getPageListData(pageUrl, payload.queryInfo)
       if(!pageResult.data) return
-      
+
       const { totalCount, list } = pageResult.data
-      console.log(pageResult);
 
       this[`${pageName}Count`] = totalCount
       this[`${pageName}List`] = list
@@ -29,6 +28,11 @@ export const useSystemStore = defineStore("system", {
   },
   getters: {
     pageListData(state) {
+      return (name: string) => {
+        return state[name]
+      }
+    },
+    pageListCount(state) {
       return (name: string) => {
         return state[name]
       }

@@ -1,6 +1,7 @@
 <template>
   <div class='pageContent'>
-    <BaseTable :listData="dataList" @selectionChange="selectionChange" v-bind="contentTableConfig">
+    <BaseTable :listData="dataList" :listCount="dataCount" @selectionChange="selectionChange" v-model:page="pageInfo"
+      v-bind="contentTableConfig">
       <template #headerOperate>
         <div class="headerBtn">
           <el-button type="primary" size="small"><el-icon>
@@ -40,14 +41,14 @@
 </template>
 
 <script setup lang='ts'>
-import { ref, reactive, computed } from 'vue'
+import { ref, watch, computed } from 'vue'
 import BaseTable from '@/base-ui/table/index'
 import { useSystemStore } from '@/stores/home/system/system'
 import { formatUtcString } from '@/utils/date-format'
 
 const systemStore = useSystemStore()
 
-
+const pageInfo = ref({ pageSize: 10, currentPage: 1 })
 
 const props = defineProps({
   contentTableConfig: {
@@ -60,33 +61,39 @@ const props = defineProps({
     default: ''
   }
 })
-const getPageData = (siftInfo:any = {}) => {
-  
+const getPageData = (siftInfo: any = {}) => {
+
   systemStore.requestPageList({
     pageName: props.pageName,
     queryInfo: {
-      offset: 0,
-      size: 10,
+      offset: (pageInfo.value.currentPage - 1) * pageInfo.value.pageSize,
+      size: pageInfo.value.pageSize,
       ...siftInfo
     }
   })
 }
+
+watch(pageInfo, () => {
+  getPageData()
+}, {
+  deep: true
+})
 getPageData()
 
 const dataList = computed(() => {
   return systemStore.pageListData(`${props.pageName}List`)
 })
 
-// const userCount = computed(() => {
-//   return systemStore.pageListData(`${props.pageName}List`)
-// })
+const dataCount = computed(() => {
+  return systemStore.pageListCount(`${props.pageName}Count`)
+})
 
 
 const selectionChange = (value: any[]) => {
   console.log(value);
 
 }
-defineExpose({getPageData})
+defineExpose({ getPageData })
 </script>
 
 <style scoped></style>
