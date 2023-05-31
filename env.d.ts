@@ -16,12 +16,11 @@ declare module '*.vue' {
 
 declare const ElMessage
 declare const ElLoading
-declare global {
-  const ElMessage:typeof import('element-plus')['ElMessage']
-  const ElLoading:typeof import('element-plus')['ElLoading']
-}
+// declare global {
+//   const ElMessage:typeof import('element-plus')['ElMessage']
+//   const ElLoading:typeof import('element-plus')['ElLoading']
+// }
 
-// declare module 'pinia-plugin-persist'
 declare module 'element-plus/dist/locale/zh-cn.mjs'
 
 

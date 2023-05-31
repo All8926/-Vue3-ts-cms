@@ -4,32 +4,40 @@ export const searchFormConfig: IForm = {
     {
       field:'name',
       type: "input",
-      label: "姓名"
+      label: "用户名",
+      placeholder:'请输入用户名'
     },
     {
-      field:'password',
-      type: "password",
-      label: "密码"
+      field:'realname',
+      type: "input",
+      label: "姓名",
+      placeholder:'请输入真实姓名'
     },
     {
-      field:'sport',
+      field:'cellphone',
+      type: "input",
+      label: "电话号码",
+      placeholder:'请输入手机号码'
+    },
+    {
+      field:'enable',
       type: "select",
-      label: "运动",
+      label: "用户状态",
       selectOptions: [
         {
-          title: "跑步",
-          value: "aaa"
+          title: "启用",
+          value: 1
         },
         {
-          title: "打球",
-          value: "bbb"
+          title: "禁用",
+          value: 0
         }
       ]
     },
     {
-      field:'createTime',
+      field:'createAt',
       type: "datepicker",
-      label: "选择时间",
+      label: "创建时间",
       options: {
         type: "daterange",
         startPlaceholder: "开始",
@@ -37,5 +45,5 @@ export const searchFormConfig: IForm = {
       }
     }
   ],
-  labelWidth: "70px"
+  labelWidth: "80px"
 }

@@ -10,12 +10,12 @@
       </template>
       <template #footer>
         <div class="searchBtn">
-          <el-button @click="resetForm">
+          <el-button @click="handleResetClick">
             <el-icon>
               <Refresh />
             </el-icon>重置
           </el-button>
-          <el-button type="primary">
+          <el-button type="primary" @click="handleQueryClick">
             <el-icon>
               <Search />
             </el-icon>搜索</el-button>
@@ -37,6 +37,8 @@ const props = defineProps({
   }
 })
 
+const emit = defineEmits(['resetEmit','searchEmit'])
+
 // eslint-disable-next-line vue/no-setup-props-destructure
 const formItems = props.searchFormConfig.formItem
 
@@ -48,8 +50,15 @@ for (const item of formItems) {
 const formData = ref(formOriginData)
 
 // 重置
-const resetForm = () => {
-  formData.value = formOriginData
+const handleResetClick = () => {
+  for (const key in formOriginData) {
+    formData.value[key] = formOriginData[key]
+  }
+  emit('resetEmit')
+}
+// 搜索
+const handleQueryClick = () => {
+  emit('searchEmit',formData.value)
 }
 </script>
 

@@ -14,10 +14,14 @@ export const useSystemStore = defineStore("system", {
   },
   actions: {
     async requestPageList(payload: IPayload) {
+
       const pageName: string = payload.pageName
       const pageUrl = pageUrls[pageName]
       const pageResult = await getPageListData(pageUrl, payload.queryInfo)
+      if(!pageResult.data) return
+      
       const { totalCount, list } = pageResult.data
+      console.log(pageResult);
 
       this[`${pageName}Count`] = totalCount
       this[`${pageName}List`] = list

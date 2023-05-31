@@ -51,7 +51,6 @@ const props = defineProps({
   },
   labelWidth:{
     type:String,
-    default:'100px'
   },
   formItemStyle:{
     type:Object,
@@ -73,9 +72,7 @@ const props = defineProps({
 
 const formData = ref({...props.modelValue})
 const emit = defineEmits(['update:modelValue'])
-watch(()  => props.modelValue,(newValue) => {
-  formData.value = {...newValue}
-})
+
 watch(formData,(newValue) => {
   emit('update:modelValue',newValue)
 
@@ -86,4 +83,7 @@ console.log(props);
 
 </script>
 
-<style scoped></style>
+<style scoped>
+.el-form{
+  padding: 0 20px;
+}</style>
