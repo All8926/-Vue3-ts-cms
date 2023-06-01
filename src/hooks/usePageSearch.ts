@@ -7,9 +7,8 @@ interface UsePageSearchReturn {
   handeleSearch: (formData: any) => void
 }
 
-
+// 按要求搜索数据列表
 export function usePageSearch():UsePageSearchReturn {
-  console.log(111);
   const pageContentRef = ref<InstanceType<typeof PageContent>>()
 
   const handleReset = () => {

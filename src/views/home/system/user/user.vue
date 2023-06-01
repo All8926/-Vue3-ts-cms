@@ -1,7 +1,11 @@
 <template>
   <div class='user'>
     <PageSearch :searchFormConfig="searchFormConfig" @resetEmit="handleReset"  @searchEmit="handeleSearch"></PageSearch>
-    <PageContent :contentTableConfig="contentTableConfig" pageName="user" ref="pageContentRef"></PageContent>
+    <PageContent :contentTableConfig="contentTableConfig" pageName="user" ref="pageContentRef">
+      <template #status="scope">
+        <el-tag :type="scope.row.enable ? 'success' : 'danger'">{{ scope.row.enable ? '正常' : "异常" }}</el-tag>
+      </template>
+    </PageContent>
   </div>
 </template>
 

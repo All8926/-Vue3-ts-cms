@@ -2,7 +2,8 @@ import { allRoutes } from "./../router/allRoutes"
 import type { IBreadcrumb } from "@/base-ui/breadcrumb/types/index"
 let firstMenu: any = null // 第一个菜单对象
 
-export function mapMenuToRoutes(menus: any[]) {
+// 获取菜单权限列表
+export function mapMenuToRoutes(userMenus: any[]) {
   const routes: any[] = []
 
   const _recurseGetRoute = (menus: any[]) => {
@@ -18,7 +19,7 @@ export function mapMenuToRoutes(menus: any[]) {
       }
     }
   }
-  _recurseGetRoute(menus)
+  _recurseGetRoute(userMenus)
   return routes
 }
 
@@ -44,6 +45,21 @@ export function pathMapToMenu(userMenus: any[], currentPath: string, breadcrumbs
       return menu
     }
   }
+}
+
+export function mapMenusToPermissions(userMenus:any[]){
+  const promissions:string[] = []
+  const _recurseGetPermission = (menus:any[]) => {
+    for (const item of menus) {
+      if(item.type === 1 || item.type === 2){
+        _recurseGetPermission(item.children ?? [])
+      }else if(item.type === 3){
+        promissions.push(item.permission)
+      }
+    }
+  }
+  _recurseGetPermission(userMenus)
+  return promissions
 }
 
 export { firstMenu }

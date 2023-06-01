@@ -8,11 +8,11 @@
         <slot name="headerOperate"></slot>
       </div>
     </div>
-    <el-table :data="listData" border style="width: 100%" size="small" @selectionChange="handleSelectionChange">
+    <el-table :data="listData" border style="width: 100%" size="small" @selectionChange="handleSelectionChange" v-bind="childrenProps">
       <el-table-column type="selection" width="50" align="center " v-if="isIndex" />
       <el-table-column align="center " type="index" label="序号" v-if="isSelection" />
       <template v-for=" item in propList" :key="item.id">
-        <el-table-column v-bind="item" align="center ">
+        <el-table-column v-bind="item" align="center" show-overflow-tooltip>
           <template #default="scope">
             <slot :name="item.slotName" :row="scope.row">
               {{ scope.row[item.prop] }}
@@ -24,7 +24,7 @@
 
     <div class="footer">
       <slot name="footer">
-        <div class="pagination">
+        <div class="pagination" v-if = "showPagination">
           <el-pagination
           :page-sizes="[10, 20, 30]"
           v-model:page-size="page!.pageSize"
@@ -75,6 +75,13 @@ const props = defineProps({
   },
   headerTitle: {
     type: String
+  },
+  childrenProps:{
+    type:Object,
+  },
+  showPagination:{
+    type:Boolean,
+    default:true
   }
 })
 

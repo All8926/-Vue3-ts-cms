@@ -31,6 +31,7 @@ declare module '@vue/runtime-core' {
     ElIcon: typeof import('element-plus/es')['ElIcon']
     ElIconMonitor: typeof import('@element-plus/icons-vue')['Monitor']
     ElIconMonitorMonitor: typeof import('@element-plus/icons-vue')['MonitorMonitor']
+    ElImage: typeof import('element-plus/es')['ElImage']
     ElInput: typeof import('element-plus/es')['ElInput']
     ElLink: typeof import('element-plus/es')['ElLink']
     ElMain: typeof import('element-plus/es')['ElMain']

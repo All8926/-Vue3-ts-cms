@@ -3,6 +3,10 @@ export interface ISystemStote {
   userCount: number
   roleList: any[]
   roleCount: number
+  goodsList:any[]
+  goodsCount:number
+  menuList:any[],
+  menuCount:number
   [key: string]: any
 }
 
@@ -11,8 +15,10 @@ interface StringDict {
 }
 
 export const pageUrls: StringDict = {
-  user: "/users/list",
-  role: "/role/list"
+  user: "/users/",
+  role: "/role/",
+  goods:"/goods/",
+  menu:'/menu/'
 }
 
 export interface IPayload {

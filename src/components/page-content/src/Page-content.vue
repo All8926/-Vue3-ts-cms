@@ -2,9 +2,9 @@
   <div class='pageContent'>
     <BaseTable :listData="dataList" :listCount="dataCount" @selectionChange="selectionChange" v-model:page="pageInfo"
       v-bind="contentTableConfig">
-      <template #headerOperate>
+      <template #headerOperate >
         <div class="headerBtn">
-          <el-button type="primary" size="small"><el-icon>
+          <el-button type="primary" size="small" v-if="isCreate"><el-icon>
               <Plus />
             </el-icon>新增</el-button>
           <el-button size="small"><el-icon>
@@ -14,27 +14,30 @@
       </template>
 
 
-      <template #status="scope">
-        <el-tag :type="scope.row.enable ? 'success' : 'danger'">{{ scope.row.enable ? '正常' : "异常" }}</el-tag>
-      </template>
+
       <template #createAt="scope">
         <span>{{ formatUtcString(scope.row.createAt) }}</span>
       </template>
       <template #updateAt="scope">
         <span>{{ formatUtcString(scope.row.updateAt) }}</span>
       </template>
-      <template #operate>
+      <template #operate="scope">
         <div class="operateBtn">
-          <el-button text type="primary" size="small">
+          <el-button text type="primary" size="small" v-if="isUpdate">
             <el-icon>
               <EditPen />
             </el-icon>
             编辑</el-button>
-          <el-button text type="danger" size="small">
+          <el-button text type="danger" size="small" @click="deleteClick(scope.row)" v-if="isDelete">
             <el-icon>
               <Delete />
             </el-icon>删除</el-button>
         </div>
+      </template>
+
+      <template v-for="item in slotList" :key="item.slotName" #[item.slotName]="scope">
+        <slot :name="item.slotName" :row="scope.row">
+        </slot>
       </template>
     </BaseTable>
   </div>
@@ -45,6 +48,7 @@ import { ref, watch, computed } from 'vue'
 import BaseTable from '@/base-ui/table/index'
 import { useSystemStore } from '@/stores/home/system/system'
 import { formatUtcString } from '@/utils/date-format'
+import {usePermission} from '@/hooks/usePermission'
 
 const systemStore = useSystemStore()
 
@@ -61,8 +65,24 @@ const props = defineProps({
     default: ''
   }
 })
-const getPageData = (siftInfo: any = {}) => {
+//
+const excludeSlotList = ['createAt','updateAt','operate',undefined]
 
+// 获取插槽列表，把公共的插槽过滤掉
+const slotList = props.contentTableConfig?.propList.filter((item:any) => {
+  return (!excludeSlotList.includes(item.slotName))
+})
+
+// 获取增删改查的权限
+const isCreate = usePermission(props.pageName, 'create')
+const isUpdate = usePermission(props.pageName, 'update')
+const isDelete = usePermission(props.pageName, 'delete')
+const isQuery = usePermission(props.pageName, 'query')
+
+
+
+const getPageData = (siftInfo: any = {}) => {
+  if(!isQuery) return
   systemStore.requestPageList({
     pageName: props.pageName,
     queryInfo: {
@@ -91,6 +111,12 @@ const dataCount = computed(() => {
 
 const selectionChange = (value: any[]) => {
   console.log(value);
+
+}
+
+// 删除
+const deleteClick = (value:any) => {
+  systemStore.deletePageData({pageName:props.pageName, id:value.id})
 
 }
 defineExpose({ getPageData })

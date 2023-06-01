@@ -1,7 +1,7 @@
 import { defineStore } from "pinia"
 
 import { type ISystemStote, pageUrls, type IPayload } from "./types"
-import { getPageListData } from "@/api/home/system/system"
+import { getPageListData,deletePageData } from "@/api/home/system/system"
 
 export const useSystemStore = defineStore("system", {
   state: (): ISystemStote => {
@@ -9,14 +9,19 @@ export const useSystemStore = defineStore("system", {
       userList: [],
       userCount: 0,
       roleList: [],
-      roleCount: 0
+      roleCount: 0,
+      goodsList:[],
+      goodsCount:0,
+      menuList:[],
+      menuCount:0
     }
   },
   actions: {
+    // 获取数据
     async requestPageList(payload: IPayload) {
 
       const pageName: string = payload.pageName
-      const pageUrl = pageUrls[pageName]
+      const pageUrl = pageUrls[pageName] + 'list'
       const pageResult = await getPageListData(pageUrl, payload.queryInfo)
       if(!pageResult.data) return
 
@@ -24,6 +29,21 @@ export const useSystemStore = defineStore("system", {
 
       this[`${pageName}Count`] = totalCount
       this[`${pageName}List`] = list
+    },
+
+    // 删除数据
+   async deletePageData(payload: any){
+      const pageName: string = payload.pageName
+
+      const pageUrl = pageUrls[pageName] + payload.id
+       const {code} = await deletePageData(pageUrl)
+        if(!code){
+          ElMessage.success('删除成功')
+          this.requestPageList(payload)
+        }else{
+          ElMessage.error('此项不允许删除')
+        }
+
     }
   },
   getters: {

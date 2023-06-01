@@ -1,5 +1,6 @@
 export interface ILoginState {
   token:string,
   userinfo:any,
-  userMneus:any
+  userMneus:any,
+  promissions:any
 }

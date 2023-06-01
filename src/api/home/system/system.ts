@@ -6,3 +6,9 @@ export const getPageListData = (url: string, queryInfo: any) => {
     data: queryInfo
   })
 }
+
+export const deletePageData = (url:string) => {
+  return hyRequest.delete<IDateType>({
+    url:url
+  })
+}

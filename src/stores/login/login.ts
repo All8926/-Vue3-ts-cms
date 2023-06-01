@@ -7,7 +7,7 @@ import {
   requestUserMenusByRoleId
 } from "@/api/login/login"
 import localCache from "@/utils/localCache"
-import {mapMenuToRoutes} from "@/utils/map-menus"
+import {mapMenuToRoutes, mapMenusToPermissions} from "@/utils/map-menus"
 
 import routers from "@/router/index"
 const router = routers
@@ -17,7 +17,8 @@ export const useLoginStore = defineStore("login", {
     return {
       token: "12345",
       userinfo: {},
-      userMneus: []
+      userMneus: [],
+      promissions:[]
     }
   },
   actions: {
@@ -36,25 +37,33 @@ export const useLoginStore = defineStore("login", {
 
       // 获取用户菜单
       const userMenusResult = await requestUserMenusByRoleId(this.userinfo.role.id)
+      console.log(userMenusResult.data);
+
       this.userMneus = userMenusResult.data
       localCache.setCache("cms_userMenus", this.userMneus)
       router.push("/main")
       this.addRoutes()
+       // 获取权限数组
+    const getPromissions = mapMenusToPermissions(this.userMneus)
+    this.promissions = getPromissions
     },
 
     // 动态添加路由
     addRoutes(){
+
       const routes = mapMenuToRoutes(this.userMneus)
       routes.forEach(item => {
         router.addRoute("main",item)
       });
     }
+
+
   },
   getters: {},
 
   // 持久化存储
   persist: {
     key: "login",
-    paths: ["token", "userinfo", "userMneus"]
+    paths: ["token", "userinfo", "userMneus","promissions"]
   }
 })
