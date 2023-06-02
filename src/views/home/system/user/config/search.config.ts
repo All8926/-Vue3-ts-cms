@@ -23,7 +23,7 @@ export const searchFormConfig: IForm = {
       field:'enable',
       type: "select",
       label: "用户状态",
-      selectOptions: [
+      selectOptions: [ 
         {
           title: "启用",
           value: 1

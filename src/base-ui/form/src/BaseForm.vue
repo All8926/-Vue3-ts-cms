@@ -7,8 +7,8 @@
       <el-row >
       <template v-for="item in formItem" :key="item.label">
 
-        <el-col :span="8" v-bind="colLayout">
-          <el-form-item :label="item.label" :style="formItemStyle">
+        <el-col  v-bind="colLayout">
+          <el-form-item :label="item.label" :style="formItemStyle" v-if="!item.isHide">
             <template v-if="item.type === 'input' || item.type === 'password'">
               <el-input v-model="formData[`${item.field}`]" :placeholder="item.placeholder" :show-password="item.type === 'password'" v-bind="item.options" />
             </template>
@@ -37,7 +37,7 @@
 </template>
 
 <script setup lang='ts'>
-import { ref, reactive, type PropType, watch } from 'vue'
+import { ref, computed, watchEffect,type PropType, watch } from 'vue'
 import type { IFormItem, } from '../types/index'
 
 const props = defineProps({
@@ -49,13 +49,14 @@ const props = defineProps({
     type: Array as PropType<IFormItem[]>,
     default:() => []
   },
+
   labelWidth:{
     type:String,
   },
   formItemStyle:{
     type:Object,
     default:() => ({
-      padding:'10px 0px'
+      padding:'0px 0px'
     })
   },
   colLayout:{
@@ -70,7 +71,24 @@ const props = defineProps({
   }
 })
 
-const formData = ref({...props.modelValue})
+// const formData = ref()
+// const initFormData = computed(() => {
+//  return Object.assign({}, props.modelValue)
+// })
+
+// watch(initFormData, (newValue) => {
+//  Object.assign(formData.value, newValue)
+// }, { immediate: true })
+
+const formData = ref({ ...props.modelValue });
+
+watchEffect(() => {
+  Object.assign(formData.value, props.modelValue);
+});
+
+
+
+
 const emit = defineEmits(['update:modelValue'])
 
 watch(formData,(newValue) => {
@@ -79,7 +97,6 @@ watch(formData,(newValue) => {
 },{
   deep:true
 })
-console.log(props);
 
 </script>
 

@@ -1,7 +1,7 @@
 import { defineStore } from "pinia"
 
 import { type ISystemStote, pageUrls, type IPayload } from "./types"
-import { getPageListData,deletePageData } from "@/api/home/system/system"
+import { getPageListData, deletePageData,patchPageData } from "@/api/home/system/system"
 
 export const useSystemStore = defineStore("system", {
   state: (): ISystemStote => {
@@ -10,20 +10,19 @@ export const useSystemStore = defineStore("system", {
       userCount: 0,
       roleList: [],
       roleCount: 0,
-      goodsList:[],
-      goodsCount:0,
-      menuList:[],
-      menuCount:0
+      goodsList: [],
+      goodsCount: 0,
+      menuList: [],
+      menuCount: 0
     }
   },
   actions: {
     // 获取数据
     async requestPageList(payload: IPayload) {
-
       const pageName: string = payload.pageName
-      const pageUrl = pageUrls[pageName] + 'list'
+      const pageUrl = pageUrls[pageName] + "list"
       const pageResult = await getPageListData(pageUrl, payload.queryInfo)
-      if(!pageResult.data) return
+      if (!pageResult.data) return
 
       const { totalCount, list } = pageResult.data
 
@@ -32,18 +31,35 @@ export const useSystemStore = defineStore("system", {
     },
 
     // 删除数据
-   async deletePageData(payload: any){
+    async deletePageData(payload: any) {
       const pageName: string = payload.pageName
 
       const pageUrl = pageUrls[pageName] + payload.id
-       const {code} = await deletePageData(pageUrl)
-        if(!code){
-          ElMessage.success('删除成功')
-          this.requestPageList(payload)
-        }else{
-          ElMessage.error('此项不允许删除')
-        }
+      const { code, data } = await deletePageData(pageUrl)
+      this.feedback(code, data, payload)
+    },
+    // 新建数据
+    async createPageData(payload: any) {
+      const pageName: string = payload.pageName
+      const pageUrl = pageUrls[pageName]
+      const { code, data } = await getPageListData(pageUrl, payload.queryInfo)
+       this.feedback(code, data, payload)
+    },
+    // 编辑数据
+    async editPageData(payload: any) {
+      const pageName: string = payload.pageName
+      const pageUrl = pageUrls[pageName] + payload.id
+      const { code, data } = await patchPageData(pageUrl, payload.queryInfo)
+       this.feedback(code, data, payload)
+    },
 
+    feedback(code: number, data: string, payload: any) {
+      if (!code) {
+        ElMessage.success(data)
+        this.requestPageList(payload)
+      } else {
+        ElMessage.error(data)
+      }
     }
   },
   getters: {

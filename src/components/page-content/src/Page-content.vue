@@ -4,10 +4,10 @@
       v-bind="contentTableConfig">
       <template #headerOperate >
         <div class="headerBtn">
-          <el-button type="primary" size="small" v-if="isCreate"><el-icon>
+          <el-button type="primary" size="small" @click="newBtnClick" v-if="isCreate"><el-icon>
               <Plus />
             </el-icon>新增</el-button>
-          <el-button size="small"><el-icon>
+          <el-button size="small" @click="renovateBtn"><el-icon>
               <Refresh />
             </el-icon>刷新</el-button>
         </div>
@@ -23,7 +23,7 @@
       </template>
       <template #operate="scope">
         <div class="operateBtn">
-          <el-button text type="primary" size="small" v-if="isUpdate">
+          <el-button text type="primary" size="small" @click="editBtnClick(scope.row)" v-if="isUpdate">
             <el-icon>
               <EditPen />
             </el-icon>
@@ -47,10 +47,12 @@
 import { ref, watch, computed } from 'vue'
 import BaseTable from '@/base-ui/table/index'
 import { useSystemStore } from '@/stores/home/system/system'
+import {useLoginStore} from '@/stores/login/login'
 import { formatUtcString } from '@/utils/date-format'
 import {usePermission} from '@/hooks/usePermission'
 
 const systemStore = useSystemStore()
+const loginStore = useLoginStore()
 
 const pageInfo = ref({ pageSize: 10, currentPage: 1 })
 
@@ -65,9 +67,10 @@ const props = defineProps({
     default: ''
   }
 })
-//
-const excludeSlotList = ['createAt','updateAt','operate',undefined]
 
+const emit = defineEmits(['newBtnClick','editBtnClick'])
+
+const excludeSlotList = ['createAt','updateAt','operate',undefined]
 // 获取插槽列表，把公共的插槽过滤掉
 const slotList = props.contentTableConfig?.propList.filter((item:any) => {
   return (!excludeSlotList.includes(item.slotName))
@@ -100,6 +103,8 @@ watch(pageInfo, () => {
 })
 getPageData()
 
+
+
 const dataList = computed(() => {
   return systemStore.pageListData(`${props.pageName}List`)
 })
@@ -117,7 +122,19 @@ const selectionChange = (value: any[]) => {
 // 删除
 const deleteClick = (value:any) => {
   systemStore.deletePageData({pageName:props.pageName, id:value.id})
-
+}
+// 编辑
+const editBtnClick = (value:any) => {
+  emit('editBtnClick',value)
+}
+// 新增
+const newBtnClick = () => {
+  emit('newBtnClick')
+}
+// 刷新
+const renovateBtn = () => {
+  systemStore.requestPageList({pageName:props.pageName})
+  loginStore.getInitialData()
 }
 defineExpose({ getPageData })
 </script>

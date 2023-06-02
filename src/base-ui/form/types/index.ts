@@ -8,6 +8,7 @@ export interface IFormItem {
   placeholder?:any,
   selectOptions?:any[],
   options?:any
+  isHide?:boolean
 }
 
 export interface IForm {
@@ -16,4 +17,5 @@ export interface IForm {
   labelWidth?:string,
   formItemStyle?:any,
   colLayout?:any
+
 }
