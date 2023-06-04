@@ -17,6 +17,7 @@
     "axios": "^1.4.0",
     "commitizen": "^4.3.0",
     "dayjs": "^1.11.7",
+    "echarts": "^5.4.2",
     "element-plus": "^2.3.4",
     "normalize.css": "^8.0.1",
     "pinia": "^2.1.3",

@@ -1,8 +1,9 @@
 export interface ILoginState {
-  token:string,
-  userinfo:any,
-  userMneus:any,
-  promissions:any,
-  departmentList:any[],
+  token:string
+  userinfo:any
+  userMneus:any
+  promissions:any
+  departmentList:any[]
   roleList:any[]
+  entireMenu:any[]
 }

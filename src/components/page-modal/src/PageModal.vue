@@ -3,6 +3,7 @@
   <div class=''>
     <el-dialog v-model="dialogVisible" width="400px" title="新建用户" :destroy-on-close="true" center>
       <BaseForm v-bind="modalConfig" v-model="formData"></BaseForm>
+      <slot></slot>
       <template #footer>
       <span class="dialog-footer">
         <el-button @click="dialogVisible = false">取消</el-button>
@@ -34,6 +35,12 @@ const props = defineProps({
 
     })
   },
+  otherData:{
+    type:Object,
+    default:() => ({
+
+    })
+  },
   pageName:{
     type:String,
     required:true
@@ -54,7 +61,7 @@ const handleConfirmClick = () => {
     // 编辑
     systemStore.editPageData({
       pageName:props.pageName,
-      queryInfo:{...formData.value},
+      queryInfo:{...formData.value, ...props.otherData},
       id:props.defaultData.id
     })
 
@@ -62,7 +69,7 @@ const handleConfirmClick = () => {
     // 新建
     systemStore.createPageData({
       pageName:props.pageName,
-      queryInfo: {...formData.value}
+      queryInfo: {...formData.value, ...props.otherData}
     })
   }
 }

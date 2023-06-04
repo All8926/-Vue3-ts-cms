@@ -21,7 +21,9 @@ export const useLoginStore = defineStore("login", {
       userMneus: [],
       promissions:[],
       departmentList:[],
-      roleList:[]
+      roleList:[],
+      entireMenu:[],
+
     }
   },
   actions: {
@@ -62,7 +64,7 @@ export const useLoginStore = defineStore("login", {
     },
 
   async  getInitialData(){
-    // 请求部门和角色数据
+    // 请求部门、角色、菜单数据
       const departmentResult = await getPageListData('/department/list',{
         offset:0,
         size:100
@@ -77,6 +79,13 @@ export const useLoginStore = defineStore("login", {
       const {list:roleList} = roleResult.data
       this.roleList = roleList
 
+      const menuResult = await getPageListData('/menu/list',{
+        offset:0,
+        size:100
+      })
+      const {list:menuList} = menuResult.data
+      this.entireMenu = menuList
+
     }
 
 
@@ -86,6 +95,6 @@ export const useLoginStore = defineStore("login", {
   // 持久化存储
   persist: {
     key: "login",
-    paths: ["token", "userinfo", "userMneus","promissions","roleList","departmentList"]
+    paths: ["token", "userinfo", "userMneus","promissions","roleList","departmentList","entireMenu"]
   }
 })

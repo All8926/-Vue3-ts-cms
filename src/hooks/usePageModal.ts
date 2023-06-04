@@ -9,7 +9,7 @@ interface UsePageModalReturn {
   handleEditData: (value: any) => void
 }
 
-type fn = () => void
+type fn = (value?:any) => void
 
 // 弹出对话框
 export function usePageModal(newCb?:fn, editCb?:fn): UsePageModalReturn {
@@ -27,7 +27,7 @@ export function usePageModal(newCb?:fn, editCb?:fn): UsePageModalReturn {
     pageModalRef.value!.dialogVisible = true
 
     defaultData.value = { ...value }
-    editCb && editCb()
+    editCb && editCb(value)
   }
 
   return { pageModalRef, defaultData, handleNewData, handleEditData }

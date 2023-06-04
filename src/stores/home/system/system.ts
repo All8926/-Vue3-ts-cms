@@ -19,9 +19,12 @@ export const useSystemStore = defineStore("system", {
   actions: {
     // 获取数据
     async requestPageList(payload: IPayload) {
+
       const pageName: string = payload.pageName
       const pageUrl = pageUrls[pageName] + "list"
       const pageResult = await getPageListData(pageUrl, payload.queryInfo)
+      console.log(pageResult);
+
       if (!pageResult.data) return
 
       const { totalCount, list } = pageResult.data
@@ -40,17 +43,19 @@ export const useSystemStore = defineStore("system", {
     },
     // 新建数据
     async createPageData(payload: any) {
+
       const pageName: string = payload.pageName
       const pageUrl = pageUrls[pageName]
       const { code, data } = await getPageListData(pageUrl, payload.queryInfo)
-       this.feedback(code, data, payload)
+       this.feedback(code, data, {pageName:payload.pageName})
     },
     // 编辑数据
     async editPageData(payload: any) {
+
       const pageName: string = payload.pageName
       const pageUrl = pageUrls[pageName] + payload.id
       const { code, data } = await patchPageData(pageUrl, payload.queryInfo)
-       this.feedback(code, data, payload)
+       this.feedback(code, data, {pageName:payload.pageName})
     },
 
     feedback(code: number, data: string, payload: any) {

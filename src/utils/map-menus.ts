@@ -62,4 +62,21 @@ export function mapMenusToPermissions(userMenus:any[]){
   return promissions
 }
 
+// 获取菜单列表叶子节点的key
+export function getMenuLeafkeys(menuList:any[]){
+  const MenuLeafkeys:any[] = []
+  const _recurseLeafkeys = (menus:any[]) => {
+    for (const menu of menus) {
+      if(menu.children){
+        _recurseLeafkeys(menu.children)
+      }else{
+        MenuLeafkeys.push(menu.id)
+      }
+    }
+  }
+  _recurseLeafkeys(menuList)
+  return MenuLeafkeys
+}
+
+
 export { firstMenu }
