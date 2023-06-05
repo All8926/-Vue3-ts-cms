@@ -4,7 +4,7 @@ import type {IDateType} from '../../types'
 enum DashboardAPI  {
   categoryGoodsCount = '/goods/category/count',
   categoryGoodsSale = '/goods/category/sale',
-  categoryGoodsFavor = '/goods/category/favre',
+  categoryGoodsFavor = '/goods/category/favor',
   addressGoodsSale = '/goods/address/sale'
 }
 

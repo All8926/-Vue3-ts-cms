@@ -13,15 +13,15 @@ export const useDashboardStore = defineStore('deshboard',{
   },
   actions:{
    async getDashboardData(){
-      const countResult = await getAddressGoodsCount()
+      const countResult = await getCategoryGoodsCount()
       this.categoryGoodsCount = countResult.data
 
-      const saleResult = await getAddressGoodsCount()
+      const saleResult = await getCategoryGoodsSale()
       this.categoryGoodsSale = saleResult.data
 
-      const favorResult = await getAddressGoodsCount()
+      const favorResult = await getCategoryGoodsFavor()
       this.categoryGoodsFavor = favorResult.data
-      
+
       const addressResult = await getAddressGoodsCount()
       this.addressGoodsSale = addressResult.data
     }

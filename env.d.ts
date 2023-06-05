@@ -5,6 +5,7 @@
 declare module "*.jpg"
 declare module "*.png"
 declare module "*.gif"
+declare module "*.json"
 declare module "element-plus";
 declare module '*.vue' {
   import { DefineComponent } from 'vue'
